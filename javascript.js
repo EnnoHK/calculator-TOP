@@ -4,6 +4,7 @@ var secondNumber
 var op
 var displayValue = 0
 var sum
+var savedOperator
 
 function setDisplayValue(number) {
     if (displayValue == 0) {
@@ -19,19 +20,21 @@ function setDisplayValue(number) {
 }
 
 function getOperator(operator) {
-    // console.log(displayValue)
+    console.log(displayValue)
     op = operator
-    firstNumber = parseInt(displayValue)
 
-    //work on this my man
-    if (!firstNumber || firstNumber != 0) {
-        secondNumber = parseInt(displayValue)
+    if (firstNumber == null) {
+        firstNumber = parseInt(displayValue)
+        console.log("first number: " + firstNumber)
+        displayValue = 0
     }
-    console.log(secondNumber)
-    // console.log(displayValue)
 
-    if (firstNumber && secondNumber) {
-        switch (op) {
+    if (op && op !== "=") {
+        savedOperator = op
+    } else {
+        secondNumber = parseInt(displayValue)
+        console.log("second number: " + secondNumber)
+        switch (savedOperator) {
             case "+":
                 sum = firstNumber + secondNumber
                 break;
@@ -44,19 +47,24 @@ function getOperator(operator) {
             case "/":
                 sum = firstNumber / secondNumber
                 break;
-            case "=":
-                setSum(sum)
             default:
                 break;
         }
+        sum = parseInt(sum)
+        document.getElementById("sumBox").innerHTML = sum
+        firstNumber = null
+        secondNumber = null
     }
 
+
+    // console.log(displayValue)
 }
 
-function setSum(sum) {
-
-    document.getElementById("sumBox").innerHTML = sum
+document.getElementById("clear").onclick = function clearDisplay() {
+    displayValue = 0
+    document.getElementById("sumBox").innerHTML = displayValue
 }
+
 
 document.getElementById("1").onclick = function declareOne() {
     setDisplayValue(1)
